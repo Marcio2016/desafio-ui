@@ -1,0 +1,49 @@
+mat-form-field {
+  margin-right: 12px;
+  max-width: 15%;
+  margin-left: 20px;
+}
+
+form {
+  /* display: flex; */
+  /* flex-direction: column; */
+  margin-top: 20px;
+}
+
+button {
+  margin: 20px 15px 0px 0px;
+}
+
+
+
+.full-width {
+  min-width: 400px;
+}
+button {
+  margin-right: 20px;
+}
+
+table {
+  width: 100%;
+}
+.card-mt{
+  background-color: #fff;
+}
+.title{
+color: #282a36;
+}
+.edit {
+  margin-right: 10px;
+}
+
+.edit > i {
+  color: #166dba;
+}
+
+.delete > i {
+  color: #fc4b6c
+}
+
+.delete {
+  cursor: pointer;
+}

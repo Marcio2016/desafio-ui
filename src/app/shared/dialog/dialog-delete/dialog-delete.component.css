@@ -1,0 +1,8 @@
+h2 {
+  display: flex;
+  align-items: center;
+}
+
+h2 span {
+  margin-left: 10px;
+}

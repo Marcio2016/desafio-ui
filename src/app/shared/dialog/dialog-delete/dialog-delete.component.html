@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>
+  <mat-icon aria-hidden="false" color="warn" aria-label="Example home icon">warning</mat-icon>
+  <span> {{ data.titulo }} </span>
+</h2>
+<mat-dialog-content class="mat-typography">
+  <h3> {{ data.descricao }} </h3>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="warn" >Excluir</button>
+</mat-dialog-actions>
