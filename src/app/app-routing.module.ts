@@ -11,7 +11,7 @@ const routes: Routes = [{
   children: [
     { path: '', redirectTo: 'protocolo', pathMatch: 'full' },
     {
-      path: 'Protocolo',
+      path: 'protocolo',
       loadChildren: () => import('./protocolo/protocolo.module').then(m => m.ProtocoloModule)
     },
     { path: 'nao-autorizado', component: NaoAutorizadoComponent },

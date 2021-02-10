@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit  {
   configurarFormulario(): void {
     this.formulario = this.formBuilder.group({
       username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      senha: ['', [Validators.required]],
     });
   }
 
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit  {
     try {
         await this.authService.login(
          this.formulario.value.username,
-         this.formulario.value.password
+         this.formulario.value.senha,
         );
         this.router.navigate(['']);
       } catch (error) {

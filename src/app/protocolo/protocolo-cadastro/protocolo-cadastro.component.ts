@@ -84,10 +84,11 @@ export class ProtocoloCadastroComponent implements OnInit {
   configurarFormulario(): void  {
     this.formulario = this.formBuilder.group({
       id: [],
-      // oficio: [null, [Validators.required]],
+      oficio:[],
       origem: [null, [Validators.required]],
       descricao: [null, [Validators.required, Validators.minLength(6)]],
       solicitante: [null, [Validators.required]],
+      create_at: []
     });
   }
 
@@ -106,8 +107,8 @@ export class ProtocoloCadastroComponent implements OnInit {
 
   atualizarRegistro(): void {
     this.service.update(this.formulario.value).subscribe(() => {
-      this.messageService.showMessage('Plano atualizado com sucesso!');
-       this.router.navigate(['/plano']);
+      this.messageService.showMessage('Protocolo atualizado com sucesso!');
+       this.router.navigate(['/protocolo']);
        this.ngOnInit();
     });
   }

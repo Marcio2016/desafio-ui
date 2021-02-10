@@ -13,12 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 
 
+
 @NgModule({
-  declarations: [
-    NavbarComponent,
-    NaoAutorizadoComponent,
-    PaginaNaoEncontradaComponent
-  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -29,6 +25,12 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     MatMenuModule,
   ],
+  declarations: [
+    NavbarComponent,
+    NaoAutorizadoComponent,
+    PaginaNaoEncontradaComponent
+  ],
+
   providers: [
     ErrorHandlerService,
   ],

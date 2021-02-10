@@ -20,16 +20,17 @@ export class AuthInterceptor implements HttpInterceptor {
     private authService: AuthService,
   ) {}
 
-  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getAuthorizationToken();
     let request: HttpRequest<any> = req;
 
     if (token) {
-      // O request é imutavel, ou seja, não é possível mudar nada
-      // Faço o clone para conseguir mudar as propriedades
-      // Passo o token de autenticação no header
       request = req.clone({
+
         headers: req.headers.set('Authorization', `Bearer ${token}`)
+        // setHeaders: {
+        //   Authorization: `Bearer ${localStorage.getItem('token')}`
+        // }
       });
     }
 
@@ -42,14 +43,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
-      // Erro de client-side ou de rede
-     // console.error('Ocorreu um erro:', error.error.message);
     } else {
-      // console.error(
-      //   `Código do erro ${error.status}, ` +
-      //   `Erro: ${JSON.stringify(error.error)}`);
+
     }
-    // retornar um observable com uma mensagem amigavel.
     return throwError({...error.error, status: error.status});
   }
 }

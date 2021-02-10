@@ -1,73 +1,73 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import jwt_decode from 'jwt-decode';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+   oauthTokenUrl: string;
    jwtPayload: any;
 
   constructor(
     private http: HttpClient,
-    ) { }
-
-  async login(username: string, password: string): Promise<boolean> {
-
-    const result = await this.http.post<any>(`${environment.api}/oauth/token`,
-    {client: 'angular', username: username, password:password ,grant_type: 'password'}
-    ).toPromise();
-    console.log(result)
-    if (result && result.token) {
-      window.localStorage.setItem('token', result.token);
-      return true;
+    private jwtHelper: JwtHelperService
+    ) {
+      this.oauthTokenUrl = `${environment.api}/oauth/token`;
+      this.carregarToken();
     }
 
-    return false;
+  async login(username: string, senha: string): Promise<void> {
+    const headers = new HttpHeaders()
+    .append('Content-Type', 'application/x-www-form-urlencoded')
+    .append('Authorization', 'Basic YW5ndWxhcjpkZXNhZmlv');
+
+    const body = `username=${username}&password=${senha}&grant_type=password`;
+
+   return this.http.post<any>(this.oauthTokenUrl,body,
+    { headers, withCredentials:true },
+
+    ).toPromise()
+    .then(response => {
+      console.log(response);
+      this.armazenarToken(response.access_token);
+    })
+    .catch(response => {
+      if (response.status === 400) {
+        if (response.error.error === 'invalid_grant') {
+          return Promise.reject('Usuário ou senha inválida!');
+        }
+      }
+
+      return Promise.reject(response);
+    });
   }
 
-  isTokenExpired(token: string){
-    if (!token) {
-      return true;
-    }
-
-    const date = this.getTokenExpirationDate(token);
-    if (date === undefined) {
-      return false;
-    }
-
-    return !(date.valueOf() > new Date().valueOf());
+  private armazenarToken(token: string) {
+    this.jwtPayload = this.jwtHelper.decodeToken(token);
+    localStorage.setItem('token', token);
   }
 
   getAuthorizationToken() {
     const token = window.localStorage.getItem('token');
+
     return token;
   }
 
-  getTokenExpirationDate(token: string): Date {
-    const decoded: any = jwt_decode(token);
-
-    if (decoded.exp === undefined) {
-      return null;
-    }
-
-    const date = new Date(0);
-    date.setUTCSeconds(decoded.exp);
-    return date;
+  isUserLoggedIn() {
+    const token = this.carregarToken();
+    return true;
   }
 
-  isUserLoggedIn() {
-    const token = this.getAuthorizationToken();
-    if (!token) {
-      return false;
-    } else if (this.isTokenExpired(token)) {
-      return false;
-    }
+  private carregarToken() {
+    const token = localStorage.getItem('token');
 
-    return true;
+    if (token) {
+      this.armazenarToken(token);
+    }
   }
 
   logout(){

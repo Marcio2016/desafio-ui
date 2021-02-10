@@ -10,6 +10,8 @@ import {AuthModule} from '../app/auth/auth.module';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { MatButtonModule } from '@angular/material/button';
     AuthModule,
     MatCardModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule
 
   ],
   providers: [],
